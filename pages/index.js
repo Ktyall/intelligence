@@ -1,339 +1,368 @@
 export default function Home() {
   return (
     <main>
-      <section className="hero">
-        <div className="halo" />
-        <div className="orbit">
-          <Orbit />
-        </div>
-
-        <div className="inner">
-          <h1>Work that feels simple</h1>
-          <p>
-            One place to create letters, run forms, and export clean files.
-            Private by default. Yours always.
-          </p>
-          <div className="bar">
-            <input placeholder="Type what you need…" />
-            <button>Go</button>
-          </div>
-        </div>
-      </section>
-
-      <section id="features" className="features">
-        <div>
-          <h3>Generators</h3>
-          <p>Create letters in your tone and language.</p>
-        </div>
-        <div>
-          <h3>Workflows</h3>
-          <p>Collect, generate, review, export, done.</p>
-        </div>
-        <div>
-          <h3>Datasets</h3>
-          <p>Process full spreadsheets at once.</p>
-        </div>
-      </section>
-
-      <style jsx>{`
-        :root{
-          --bg: #1f225c;
-          --text: #f8f9ff;
-          --muted: rgba(255,255,255,.6);
-          --accent: #ffd166;
-        }
-
-        /* Hero */
-        .hero{
-          position: relative;
-          min-height: 82vh;
-          display: flex; align-items: center; justify-content: center;
-          text-align: center;
-          overflow: hidden;
-        }
-        .halo{
-          position: absolute; inset: 0;
-          background:
-            radial-gradient(40rem 40rem at 50% 30%, rgba(255,209,102,.28), transparent 60%),
-            radial-gradient(30rem 20rem at 80% 70%, rgba(255,255,255,.06), transparent 70%);
-          animation: pulse 14s ease-in-out infinite alternate;
-          filter: blur(60px);
-        }
-        @keyframes pulse {
-          from { transform: scale(1); opacity: .8; }
-          to { transform: scale(1.15); opacity: 1; }
-        }
-
-        .inner{ position: relative; max-width: 720px; z-index: 2; padding: 0 24px; }
-        h1{
-          font-size: clamp(42px, 6vw, 84px);
-          line-height: 1.05;
-          margin-bottom: 12px;
-          color: var(--text);
-        }
-        p{
-          color: var(--muted);
-          font-size: 18px;
-          max-width: 540px;
-          margin: 0 auto 36px;
-        }
-
-        .bar{
-          display: flex; justify-content: center;
-          gap: 8px; flex-wrap: wrap;
-        }
-        input{
-          width: min(80vw, 420px);
-          padding: 14px 16px;
-          border-radius: 12px;
-          border: none;
-          outline: none;
-          font-size: 16px;
-        }
-        button{
-          padding: 14px 20px;
-          border: none;
-          border-radius: 12px;
-          background: var(--accent);
-          color: #0b0b10;
-          font-weight: 700;
-          cursor: pointer;
-        }
-
-        /* Orbit wrapper */
-        .orbit{
-          position: absolute;
-          width: min(95vw, 860px);
-          height: min(95vw, 860px);
-          max-width: 860px;
-          max-height: 860px;
-          border-radius: 9999px;
-          z-index: 1;
-          pointer-events: none;
-        }
-
-        /* Features */
-        .features{
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-          gap: 24px;
-          max-width: 900px;
-          margin: 96px auto;
-          padding: 0 24px;
-        }
-        .features h3{
-          color: var(--accent);
-          font-size: 20px;
-          margin-bottom: 6px;
-        }
-        .features p{
-          color: var(--muted);
-          font-size: 15px;
-          margin: 0;
-        }
-
-        /* Respect prefers reduced motion */
-        @media (prefers-reduced-motion: reduce) {
-          .halo { animation: none; }
-          .orbit * { animation: none !important; }
-        }
-      `}</style>
+      <Hero />
+      <Features />
+      <LoginStub />
     </main>
   );
 }
 
-/* Orbit of HD SVG icons that circle the hero text */
-function Orbit() {
-  const icons = [
-    <IconLesson key="lesson" />,
-    <IconCalculator key="calc" />,
-    <IconMap key="map" />,
-    <IconForm key="form" />,
-    <IconChart key="chart" />,
-    <IconShield key="shield" />,
-    <IconGear key="gear" />,
-    <IconGlobe key="globe" />
-  ];
+function Hero() {
+  return (
+    <section className="hero">
+      <div className="orb-bg" aria-hidden />
+      <FloatingIcons />
 
-  /* Place icons on two rings with different speeds and delays */
+      <div className="wrap inner">
+        <h1>Work that feels simple</h1>
+        <p>One place to create letters, run forms, and export clean files. Private by default. Yours always.</p>
+
+        <div className="bar">
+          <input placeholder="Type what you need…" />
+          <button>Go</button>
+        </div>
+      </div>
+
+      <style jsx>{`
+        .hero{
+          position: relative;
+          min-height: 82vh;
+          display: grid; place-items: center;
+          text-align: center;
+          overflow: hidden;
+        }
+
+        /* Soft 3D glow behind hero */
+        .orb-bg{
+          position: absolute; inset: -10%;
+          background:
+            radial-gradient(60rem 30rem at 50% 0%, rgba(88,208,255,.20), transparent 60%),
+            radial-gradient(50rem 28rem at 80% 100%, rgba(127,231,196,.16), transparent 60%);
+          filter: blur(60px) saturate(110%);
+          animation: breathe 18s ease-in-out infinite alternate;
+        }
+        @keyframes breathe { from { transform: scale(1)} to { transform: scale(1.12)} }
+
+        .inner{ position: relative; z-index: 2; }
+        h1{
+          font-size: clamp(44px, 6.8vw, 88px);
+          line-height: 1.06;
+          margin: 0 0 10px 0;
+          letter-spacing: -.02em;
+          text-shadow: 0 10px 40px rgba(88,208,255,.18);
+        }
+        p{
+          margin: 0 auto 28px;
+          max-width: 560px;
+          color: var(--muted);
+          font-size: clamp(16px, 2.4vw, 18px);
+        }
+
+        .bar{
+          display: inline-grid;
+          grid-template-columns: 1fr auto;
+          gap: 10px;
+          width: min(92vw, 560px);
+          padding: 8px;
+          border-radius: 16px;
+          background:
+            linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+          box-shadow:
+            inset 0 1px 0 rgba(255,255,255,.12),
+            0 12px 40px rgba(0,0,0,.35);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          border: 1px solid rgba(255,255,255,.14);
+        }
+        input{
+          border: 0; outline: 0; background: rgba(255,255,255,.12);
+          padding: 14px 16px; border-radius: 12px;
+          color: var(--text);
+          font-size: 16px;
+          box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+        }
+        input::placeholder{ color: rgba(238,242,255,.55); }
+        button{
+          border: 0; border-radius: 12px; padding: 14px 18px;
+          font-weight: 800; cursor: pointer;
+          color: var(--ink);
+          background: linear-gradient(180deg, #8fe4ff, var(--accent));
+          box-shadow:
+            0 10px 30px rgba(88,208,255,.35),
+            inset 0 1px 0 rgba(255,255,255,.7);
+        }
+
+        @media (prefers-reduced-motion: reduce){
+          .orb-bg, .float, .spinner{ animation: none !important }
+        }
+      `}</style>
+    </section>
+  );
+}
+
+/* Minimal feature row */
+function Features() {
+  const items = [
+    { t: "Generators", d: "Letters and docs in your tone", c: "#8fe4ff" },
+    { t: "Workflows", d: "Collect, generate, export", c: "#7fe7c4" },
+    { t: "Datasets", d: "Process full spreadsheets", c: "#d7e2ff" }
+  ];
+  return (
+    <section id="features" className="wrap features">
+      {items.map((x) => (
+        <div key={x.t} className="chip" style={{ background: x.c }}>
+          <div className="label">{x.t}</div>
+          <div className="sub"> {x.d} </div>
+        </div>
+      ))}
+      <style jsx>{`
+        .features{
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+          gap: 14px;
+          margin: 72px 0 36px;
+        }
+        .chip{
+          border-radius: 16px;
+          padding: 16px;
+          color: #0b0b10;
+          box-shadow: 0 8px 24px rgba(0,0,0,.15), inset 0 1px 0 rgba(255,255,255,.7);
+        }
+        .label{ font-weight: 900; }
+        .sub{ opacity: .8; font-weight: 600; margin-top: 4px; }
+      `}</style>
+    </section>
+  );
+}
+
+/* Simple login card placeholder */
+function LoginStub() {
+  return (
+    <section id="login" className="wrap login">
+      <div className="card">
+        <h3>Sign in</h3>
+        <div className="grid">
+          <input placeholder="Email" />
+          <input placeholder="Password" type="password" />
+          <button>Continue</button>
+        </div>
+        <div className="muted">Real sign in lands in the next phase</div>
+      </div>
+
+      <style jsx>{`
+        .login{ margin: 48px 0 96px; }
+        .card{
+          max-width: 520px; margin: 0 auto; padding: 20px;
+          border-radius: 18px; background: rgba(255,255,255,.06);
+          backdrop-filter: blur(8px);
+          border: 1px solid rgba(255,255,255,.12);
+          box-shadow: 0 12px 40px rgba(0,0,0,.35);
+          text-align: center;
+        }
+        .grid{ display: grid; gap: 10px; }
+        input{
+          border: 0; outline: 0; background: rgba(255,255,255,.10);
+          padding: 12px 14px; border-radius: 12px; color: var(--text);
+        }
+        button{
+          border: 0; border-radius: 12px; padding: 12px 16px;
+          font-weight: 800; cursor: pointer;
+          color: var(--ink); background: var(--accent);
+          box-shadow: 0 10px 24px rgba(88,208,255,.30), inset 0 1px 0 rgba(255,255,255,.7);
+        }
+        .muted{ color: var(--muted); margin-top: 8px; font-size: 14px; }
+      `}</style>
+    </section>
+  );
+}
+
+/* High fidelity 3D-like icon set that orbits the headline */
+function FloatingIcons() {
+  const nodes = [
+    IconBook(), IconCalc(), IconMap(), IconShield(),
+    IconChart(), IconStars(), IconForm(), IconBell()
+  ];
   return (
     <>
       <style jsx>{`
-        .ring{
+        .layer{
           position: absolute; inset: 0; margin: auto;
-          width: 100%; height: 100%;
-          animation: spin 48s linear infinite;
-          filter: drop-shadow(0 10px 24px rgba(0,0,0,.25));
+          width: min(95vw, 900px); height: min(95vw, 900px);
+          pointer-events: none; z-index: 1;
         }
-        .ring.r2{ animation-duration: 60s; }
+        .spinner{
+          position: absolute; inset: 0;
+          animation: spin 60s linear infinite;
+        }
+        .spinner.slow{ animation-duration: 90s; }
+        @keyframes spin { to { transform: rotate(360deg) } }
 
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        .node{
+        .float{
           position: absolute; top: 50%; left: 50%;
           transform-origin: 0 0;
+          filter: drop-shadow(0 18px 40px rgba(0,0,0,.35));
         }
-        .node > div{
-          background: #fff;
-          border-radius: 16px;
-          padding: 10px;
-          width: 64px; height: 64px;
-          display: grid; place-items: center;
+        .tile{
+          width: 72px; height: 72px; display: grid; place-items: center;
+          border-radius: 18px;
+          background:
+            radial-gradient(120% 120% at 30% 20%, rgba(255,255,255,.9), rgba(255,255,255,.6) 40%, rgba(255,255,255,.35) 70%),
+            linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.10));
+          border: 1px solid rgba(255,255,255,.5);
+          box-shadow:
+            inset 0 1px 0 rgba(255,255,255,.9),
+            inset 0 -1px 0 rgba(0,0,0,.08);
         }
-
-        /* Keep icons upright as the ring rotates */
-        .node svg{
-          transform: rotate(-0deg);
-        }
-
-        @media (max-width: 600px){
-          .node > div{ width: 52px; height: 52px; padding: 8px; }
-        }
+        @media (max-width: 600px){ .tile{ width: 58px; height: 58px } }
       `}</style>
 
-      {/* Outer ring */}
-      <div className="ring">
-        {icons.slice(0, 4).map((Icon, i) => (
-          <OrbNode key={i} index={i} total={4} radius={38} />
-        ))}
+      <div className="layer">
+        <div className="spinner">
+          {nodes.slice(0,4).map((Icon, i) => (
+            <IconNode key={i} index={i} total={4} radius={36}>{Icon}</IconNode>
+          ))}
+        </div>
+        <div className="spinner slow">
+          {nodes.slice(4).map((Icon, i) => (
+            <IconNode key={i} index={i} total={4} radius={24} reverse>{Icon}</IconNode>
+          ))}
+        </div>
       </div>
-
-      {/* Inner ring */}
-      <div className="ring r2">
-        {icons.slice(4).map((Icon, i) => (
-          <OrbNode key={i} index={i} total={4} radius={26} reverse />
-        ))}
-      </div>
-
-      {/* Render icons inside nodes after layout for clarity */}
-      {icons.slice(0, 4).map((Icon, i) => (
-        <IconWrapper key={`io-${i}`} index={i} total={4} radius={38}>
-          {Icon}
-        </IconWrapper>
-      ))}
-      {icons.slice(4).map((Icon, i) => (
-        <IconWrapper key={`ii-${i}`} index={i} total={4} radius={26} reverse>
-          {Icon}
-        </IconWrapper>
-      ))}
     </>
   );
 }
 
-/* Position helpers */
-function IconWrapper({ index, total, radius, reverse, children }) {
+function IconNode({ index, total, radius, reverse, children }) {
   const angle = (index / total) * 360;
   const rot = reverse ? -angle : angle;
   const dist = radius + "vmin";
   return (
     <div
-      className="node"
-      style={{
-        transform: `rotate(${rot}deg) translate(${dist}) rotate(${-rot}deg)`
-      }}
+      className="float"
+      style={{ transform: `rotate(${rot}deg) translate(${dist}) rotate(${-rot}deg)` }}
     >
-      <div>{children}</div>
+      <div className="tile">{children}</div>
     </div>
   );
 }
 
-/* Empty nodes to drive the ring rotation size. Hidden visually. */
-function OrbNode({ index, total, radius, reverse }) {
-  const angle = (index / total) * 360;
-  const rot = reverse ? -angle : angle;
-  const dist = radius + "vmin";
+/* 3D styled SVG icons with gradients and highlights */
+function IconBook(){
   return (
-    <div
-      className="node"
-      aria-hidden
-      style={{
-        transform: `rotate(${rot}deg) translate(${dist}) rotate(${-rot}deg)`,
-        opacity: 0
-      }}
-    >
-      <div />
-    </div>
-  );
-}
-
-/* HD vector icons */
-function IconLesson() {
-  return (
-    <svg viewBox="0 0 48 48" width="36" height="36" aria-label="Lessons">
-      <rect x="6" y="8" width="36" height="28" rx="4" fill="#7c5cff" />
-      <rect x="10" y="12" width="20" height="4" rx="2" fill="#ffffff" />
-      <rect x="10" y="19" width="28" height="3" rx="1.5" fill="#cfc7ff" />
-      <rect x="10" y="25" width="24" height="3" rx="1.5" fill="#cfc7ff" />
-      <rect x="10" y="31" width="18" height="3" rx="1.5" fill="#cfc7ff" />
-      <rect x="16" y="38" width="16" height="4" rx="2" fill="#7c5cff" opacity=".25" />
+    <svg viewBox="0 0 48 48" width="34" height="34" aria-label="Lessons">
+      <defs>
+        <linearGradient id="b1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#c1d9ff"/><stop offset="1" stopColor="#89b7ff"/>
+        </linearGradient>
+        <radialGradient id="bh" cx="30%" cy="20%">
+          <stop offset="0" stopColor="#fff" stopOpacity=".9"/><stop offset="1" stopColor="#fff" stopOpacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect x="9" y="8" width="30" height="32" rx="6" fill="url(#b1)"/>
+      <rect x="12" y="13" width="18" height="3" rx="1.5" fill="#ffffff" opacity=".9"/>
+      <rect x="12" y="19" width="24" height="3" rx="1.5" fill="#ffffff" opacity=".7"/>
+      <rect x="12" y="25" width="18" height="3" rx="1.5" fill="#ffffff" opacity=".7"/>
+      <rect x="12" y="31" width="12" height="3" rx="1.5" fill="#ffffff" opacity=".7"/>
+      <circle cx="18" cy="12" r="10" fill="url(#bh)" />
     </svg>
   );
 }
-function IconCalculator() {
+function IconCalc(){
   return (
-    <svg viewBox="0 0 48 48" width="36" height="36" aria-label="Calculator">
-      <rect x="10" y="6" width="28" height="36" rx="6" fill="#16db65" />
-      <rect x="14" y="10" width="20" height="8" rx="3" fill="#0b0b10" opacity=".2" />
-      {[[14,22],[22,22],[30,22],[14,30],[22,30],[30,30]].map(([x,y],i)=>(
-        <rect key={i} x={x} y={y} width="6" height="6" rx="2" fill="#ffffff" />
+    <svg viewBox="0 0 48 48" width="34" height="34" aria-label="Calculator">
+      <defs>
+        <linearGradient id="c1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#baf9e1"/><stop offset="1" stopColor="#7fe7c4"/>
+        </linearGradient>
+      </defs>
+      <rect x="10" y="6" width="28" height="36" rx="8" fill="url(#c1)"/>
+      {[[14,24],[22,24],[30,24],[14,32],[22,32],[30,32]].map(([x,y],i)=>(
+        <rect key={i} x={x} y={y} width="6" height="6" rx="2" fill="#0b0b10" opacity=".85"/>
       ))}
     </svg>
   );
 }
-function IconMap() {
+function IconMap(){
   return (
-    <svg viewBox="0 0 48 48" width="36" height="36" aria-label="Map">
-      <path d="M6 12l10-4 16 6 10-4v26l-10 4-16-6-10 4z" fill="#08b8ff"/>
+    <svg viewBox="0 0 48 48" width="34" height="34" aria-label="Map">
+      <defs>
+        <linearGradient id="m1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#8fe4ff"/><stop offset="1" stopColor="#58d0ff"/>
+        </linearGradient>
+      </defs>
+      <path d="M6 12l10-4 16 6 10-4v26l-10 4-16-6-10 4z" fill="url(#m1)"/>
+      <circle cx="30" cy="18" r="4" fill="#ffefff" />
       <path d="M16 8v26m16-20v26" stroke="#ffffff" strokeWidth="2" opacity=".8"/>
-      <circle cx="30" cy="18" r="4" fill="#ff5aaa" stroke="#fff" strokeWidth="2"/>
     </svg>
   );
 }
-function IconForm() {
+function IconShield(){
   return (
-    <svg viewBox="0 0 48 48" width="36" height="36" aria-label="Form">
-      <rect x="10" y="6" width="28" height="36" rx="4" fill="#ffd166"/>
-      <rect x="14" y="12" width="20" height="4" rx="2" fill="#0b0b10" opacity=".25"/>
-      <rect x="14" y="20" width="20" height="3" rx="1.5" fill="#0b0b10" opacity=".25"/>
-      <rect x="14" y="27" width="20" height="3" rx="1.5" fill="#0b0b10" opacity=".25"/>
-      <rect x="14" y="34" width="12" height="4" rx="2" fill="#ffffff"/>
+    <svg viewBox="0 0 48 48" width="34" height="34" aria-label="Shield">
+      <defs>
+        <linearGradient id="s1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#d8ffe6"/><stop offset="1" stopColor="#aaf7cf"/>
+        </linearGradient>
+      </defs>
+      <path d="M24 6l14 6v10c0 9-14 16-14 16S10 31 10 22V12l14-6z" fill="url(#s1)"/>
+      <path d="M24 14v18" stroke="#0b0b10" strokeWidth="2" opacity=".2"/>
     </svg>
   );
 }
-function IconChart() {
+function IconChart(){
   return (
-    <svg viewBox="0 0 48 48" width="36" height="36" aria-label="Chart">
-      <rect x="8" y="8" width="32" height="28" rx="4" fill="#ff5aaa"/>
-      <rect x="14" y="24" width="4" height="10" rx="2" fill="#ffffff"/>
-      <rect x="22" y="20" width="4" height="14" rx="2" fill="#ffffff"/>
-      <rect x="30" y="16" width="4" height="18" rx="2" fill="#ffffff"/>
-      <path d="M12 34h24" stroke="#ffffff" strokeWidth="2" opacity=".6"/>
+    <svg viewBox="0 0 48 48" width="34" height="34" aria-label="Chart">
+      <defs>
+        <linearGradient id="ch1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#ffdcdc"/><stop offset="1" stopColor="#ffb2b2"/>
+        </linearGradient>
+      </defs>
+      <rect x="8" y="10" width="32" height="26" rx="6" fill="url(#ch1)"/>
+      <rect x="14" y="24" width="4" height="10" rx="2" fill="#0b0b10" opacity=".85"/>
+      <rect x="22" y="20" width="4" height="14" rx="2" fill="#0b0b10" opacity=".85"/>
+      <rect x="30" y="16" width="4" height="18" rx="2" fill="#0b0b10" opacity=".85"/>
     </svg>
   );
 }
-function IconShield() {
+function IconStars(){
   return (
-    <svg viewBox="0 0 48 48" width="36" height="36" aria-label="Shield">
-      <path d="M24 6l14 6v10c0 9-14 16-14 16S10 31 10 22V12l14-6z" fill="#5ee1a1"/>
-      <path d="M24 14v18" stroke="#ffffff" strokeWidth="2" opacity=".9"/>
+    <svg viewBox="0 0 48 48" width="34" height="34" aria-label="Quality">
+      <defs>
+        <linearGradient id="st1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#fff3b0"/><stop offset="1" stopColor="#ffd166"/>
+        </linearGradient>
+      </defs>
+      <path d="M24 8l4 8 9 1-7 6 2 9-8-4-8 4 2-9-7-6 9-1z" fill="url(#st1)"/>
+      <circle cx="36" cy="14" r="3" fill="#fff7cc" />
     </svg>
   );
 }
-function IconGear() {
+function IconForm(){
   return (
-    <svg viewBox="0 0 48 48" width="36" height="36" aria-label="Gear">
-      <circle cx="24" cy="24" r="6" fill="#ffffff"/>
-      <path d="M24 8l3 4 5-1 2 5 5 2-1 5 4 3-4 3 1 5-5 2-2 5-5-1-3 4-3-4-5 1-2-5-5-2 1-5-4-3 4-3-1-5 5-2 2-5 5 1z"
-        fill="#7c5cff" opacity=".95"/>
+    <svg viewBox="0 0 48 48" width="34" height="34" aria-label="Form">
+      <defs>
+        <linearGradient id="f1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#e6eaff"/><stop offset="1" stopColor="#c9d3ff"/>
+        </linearGradient>
+      </defs>
+      <rect x="10" y="6" width="28" height="36" rx="6" fill="url(#f1)"/>
+      <rect x="14" y="14" width="20" height="3" rx="1.5" fill="#0b0b10" opacity=".25"/>
+      <rect x="14" y="22" width="20" height="3" rx="1.5" fill="#0b0b10" opacity=".25"/>
+      <rect x="14" y="30" width="14" height="4" rx="2" fill="#0b0b10" opacity=".85"/>
     </svg>
   );
 }
-function IconGlobe() {
+function IconBell(){
   return (
-    <svg viewBox="0 0 48 48" width="36" height="36" aria-label="Globe">
-      <circle cx="24" cy="24" r="16" fill="#0ea5e9"/>
-      <path d="M8 24h32M24 8v32" stroke="#ffffff" strokeWidth="2" opacity=".9"/>
-      <ellipse cx="24" cy="24" rx="10" ry="16" fill="none" stroke="#ffffff" strokeWidth="2" opacity=".9"/>
+    <svg viewBox="0 0 48 48" width="34" height="34" aria-label="Alerts">
+      <defs>
+        <linearGradient id="bl1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#ffe3f2"/><stop offset="1" stopColor="#ffb3da"/>
+        </linearGradient>
+      </defs>
+      <path d="M24 10c-6 0-10 4-10 10v6l-2 3h24l-2-3v-6c0-6-4-10-10-10z" fill="url(#bl1)"/>
+      <circle cx="24" cy="37" r="3" fill="#ffffff" opacity=".9"/>
     </svg>
   );
 }
