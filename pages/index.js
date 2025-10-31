@@ -177,7 +177,8 @@ function LoginStub() {
   );
 }
 
-/* High fidelity 3D-like icon set that orbits the headline */
+/* Bigger orbit icons that sit closer to the headline */
+
 function FloatingIcons() {
   const nodes = [
     IconBook(), IconCalc(), IconMap(), IconShield(),
@@ -188,14 +189,14 @@ function FloatingIcons() {
       <style jsx>{`
         .layer{
           position: absolute; inset: 0; margin: auto;
-          width: min(95vw, 900px); height: min(95vw, 900px);
+          width: min(92vw, 880px); height: min(92vw, 880px);
           pointer-events: none; z-index: 1;
         }
         .spinner{
           position: absolute; inset: 0;
-          animation: spin 60s linear infinite;
+          animation: spin 70s linear infinite;
         }
-        .spinner.slow{ animation-duration: 90s; }
+        .spinner.slow{ animation-duration: 100s; }
         @keyframes spin { to { transform: rotate(360deg) } }
 
         .float{
@@ -204,28 +205,39 @@ function FloatingIcons() {
           filter: drop-shadow(0 18px 40px rgba(0,0,0,.35));
         }
         .tile{
-          width: 72px; height: 72px; display: grid; place-items: center;
-          border-radius: 18px;
+          width: 96px; height: 96px;
+          display: grid; place-items: center;
+          border-radius: 22px;
           background:
-            radial-gradient(120% 120% at 30% 20%, rgba(255,255,255,.9), rgba(255,255,255,.6) 40%, rgba(255,255,255,.35) 70%),
-            linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.10));
-          border: 1px solid rgba(255,255,255,.5);
+            radial-gradient(120% 120% at 30% 20%, rgba(255,255,255,.92), rgba(255,255,255,.62) 40%, rgba(255,255,255,.38) 70%),
+            linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.12));
+          border: 1px solid rgba(255,255,255,.55);
           box-shadow:
             inset 0 1px 0 rgba(255,255,255,.9),
             inset 0 -1px 0 rgba(0,0,0,.08);
+          animation: bob 6s ease-in-out infinite;
         }
-        @media (max-width: 600px){ .tile{ width: 58px; height: 58px } }
+        @keyframes bob { 0%{ transform: translateY(0) } 50%{ transform: translateY(-6px) } 100%{ transform: translateY(0) } }
+
+        @media (max-width: 600px){
+          .tile{ width: 80px; height: 80px }
+        }
       `}</style>
 
       <div className="layer">
         <div className="spinner">
-          {nodes.slice(0,4).map((Icon, i) => (
-            <IconNode key={i} index={i} total={4} radius={36}>{Icon}</IconNode>
+          {Array.from({length: 4}).map((_, i) => (
+            <IconNode key={i} index={i} total={4} radius={42}>
+              {[IconBook(), IconCalc(), IconMap(), IconShield()][i]}
+            </IconNode>
           ))}
         </div>
+
         <div className="spinner slow">
-          {nodes.slice(4).map((Icon, i) => (
-            <IconNode key={i} index={i} total={4} radius={24} reverse>{Icon}</IconNode>
+          {Array.from({length: 4}).map((_, i) => (
+            <IconNode key={`inner-${i}`} index={i} total={4} radius={30} reverse>
+              {[IconChart(), IconStars(), IconForm(), IconBell()][i]}
+            </IconNode>
           ))}
         </div>
       </div>
@@ -247,10 +259,10 @@ function IconNode({ index, total, radius, reverse, children }) {
   );
 }
 
-/* 3D styled SVG icons with gradients and highlights */
+/* Icons at 54 px for true hi res look on retina */
 function IconBook(){
   return (
-    <svg viewBox="0 0 48 48" width="34" height="34" aria-label="Lessons">
+    <svg viewBox="0 0 48 48" width="54" height="54" aria-label="Lessons">
       <defs>
         <linearGradient id="b1" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#c1d9ff"/><stop offset="1" stopColor="#89b7ff"/>
@@ -259,24 +271,24 @@ function IconBook(){
           <stop offset="0" stopColor="#fff" stopOpacity=".9"/><stop offset="1" stopColor="#fff" stopOpacity="0"/>
         </radialGradient>
       </defs>
-      <rect x="9" y="8" width="30" height="32" rx="6" fill="url(#b1)"/>
-      <rect x="12" y="13" width="18" height="3" rx="1.5" fill="#ffffff" opacity=".9"/>
-      <rect x="12" y="19" width="24" height="3" rx="1.5" fill="#ffffff" opacity=".7"/>
-      <rect x="12" y="25" width="18" height="3" rx="1.5" fill="#ffffff" opacity=".7"/>
-      <rect x="12" y="31" width="12" height="3" rx="1.5" fill="#ffffff" opacity=".7"/>
+      <rect x="7" y="6" width="34" height="36" rx="7" fill="url(#b1)"/>
+      <rect x="12" y="14" width="18" height="3" rx="1.5" fill="#ffffff" opacity=".9"/>
+      <rect x="12" y="21" width="24" height="3" rx="1.5" fill="#ffffff" opacity=".75"/>
+      <rect x="12" y="28" width="18" height="3" rx="1.5" fill="#ffffff" opacity=".75"/>
+      <rect x="12" y="35" width="12" height="3" rx="1.5" fill="#ffffff" opacity=".75"/>
       <circle cx="18" cy="12" r="10" fill="url(#bh)" />
     </svg>
   );
 }
 function IconCalc(){
   return (
-    <svg viewBox="0 0 48 48" width="34" height="34" aria-label="Calculator">
+    <svg viewBox="0 0 48 48" width="54" height="54" aria-label="Calculator">
       <defs>
         <linearGradient id="c1" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#baf9e1"/><stop offset="1" stopColor="#7fe7c4"/>
         </linearGradient>
       </defs>
-      <rect x="10" y="6" width="28" height="36" rx="8" fill="url(#c1)"/>
+      <rect x="8" y="4" width="32" height="40" rx="9" fill="url(#c1)"/>
       {[[14,24],[22,24],[30,24],[14,32],[22,32],[30,32]].map(([x,y],i)=>(
         <rect key={i} x={x} y={y} width="6" height="6" rx="2" fill="#0b0b10" opacity=".85"/>
       ))}
@@ -285,7 +297,7 @@ function IconCalc(){
 }
 function IconMap(){
   return (
-    <svg viewBox="0 0 48 48" width="34" height="34" aria-label="Map">
+    <svg viewBox="0 0 48 48" width="54" height="54" aria-label="Map">
       <defs>
         <linearGradient id="m1" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#8fe4ff"/><stop offset="1" stopColor="#58d0ff"/>
@@ -299,7 +311,7 @@ function IconMap(){
 }
 function IconShield(){
   return (
-    <svg viewBox="0 0 48 48" width="34" height="34" aria-label="Shield">
+    <svg viewBox="0 0 48 48" width="54" height="54" aria-label="Shield">
       <defs>
         <linearGradient id="s1" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#d8ffe6"/><stop offset="1" stopColor="#aaf7cf"/>
@@ -312,22 +324,22 @@ function IconShield(){
 }
 function IconChart(){
   return (
-    <svg viewBox="0 0 48 48" width="34" height="34" aria-label="Chart">
+    <svg viewBox="0 0 48 48" width="54" height="54" aria-label="Chart">
       <defs>
         <linearGradient id="ch1" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#ffdcdc"/><stop offset="1" stopColor="#ffb2b2"/>
         </linearGradient>
       </defs>
-      <rect x="8" y="10" width="32" height="26" rx="6" fill="url(#ch1)"/>
-      <rect x="14" y="24" width="4" height="10" rx="2" fill="#0b0b10" opacity=".85"/>
-      <rect x="22" y="20" width="4" height="14" rx="2" fill="#0b0b10" opacity=".85"/>
-      <rect x="30" y="16" width="4" height="18" rx="2" fill="#0b0b10" opacity=".85"/>
+      <rect x="6" y="8" width="36" height="32" rx="7" fill="url(#ch1)"/>
+      <rect x="14" y="26" width="4" height="12" rx="2" fill="#0b0b10" opacity=".85"/>
+      <rect x="22" y="20" width="4" height="18" rx="2" fill="#0b0b10" opacity=".85"/>
+      <rect x="30" y="16" width="4" height="22" rx="2" fill="#0b0b10" opacity=".85"/>
     </svg>
   );
 }
 function IconStars(){
   return (
-    <svg viewBox="0 0 48 48" width="34" height="34" aria-label="Quality">
+    <svg viewBox="0 0 48 48" width="54" height="54" aria-label="Quality">
       <defs>
         <linearGradient id="st1" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#fff3b0"/><stop offset="1" stopColor="#ffd166"/>
@@ -340,22 +352,22 @@ function IconStars(){
 }
 function IconForm(){
   return (
-    <svg viewBox="0 0 48 48" width="34" height="34" aria-label="Form">
+    <svg viewBox="0 0 48 48" width="54" height="54" aria-label="Form">
       <defs>
         <linearGradient id="f1" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#e6eaff"/><stop offset="1" stopColor="#c9d3ff"/>
         </linearGradient>
       </defs>
-      <rect x="10" y="6" width="28" height="36" rx="6" fill="url(#f1)"/>
-      <rect x="14" y="14" width="20" height="3" rx="1.5" fill="#0b0b10" opacity=".25"/>
-      <rect x="14" y="22" width="20" height="3" rx="1.5" fill="#0b0b10" opacity=".25"/>
-      <rect x="14" y="30" width="14" height="4" rx="2" fill="#0b0b10" opacity=".85"/>
+      <rect x="8" y="6" width="32" height="36" rx="7" fill="url(#f1)"/>
+      <rect x="14" y="16" width="20" height="3" rx="1.5" fill="#0b0b10" opacity=".25"/>
+      <rect x="14" y="24" width="20" height="3" rx="1.5" fill="#0b0b10" opacity=".25"/>
+      <rect x="14" y="32" width="14" height="4" rx="2" fill="#0b0b10" opacity=".85"/>
     </svg>
   );
 }
 function IconBell(){
   return (
-    <svg viewBox="0 0 48 48" width="34" height="34" aria-label="Alerts">
+    <svg viewBox="0 0 48 48" width="54" height="54" aria-label="Alerts">
       <defs>
         <linearGradient id="bl1" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#ffe3f2"/><stop offset="1" stopColor="#ffb3da"/>
