@@ -6,130 +6,129 @@ export default function Home() {
       <Head>
         <title>Intelligence</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-        <meta name="theme-color" content="#f7f7fb" />
       </Head>
 
       <main className="wrap">
-        <div className="halo" aria-hidden />
-        <div className="card">
-          <h1 className="wordmark">Intelligence</h1>
+        <h1 className="mark">Intelligence</h1>
 
-          <label className="sr" htmlFor="ask">Type here</label>
-          <div className="inputWrap">
-            <input id="ask" placeholder="Type here" />
-            <button>Go</button>
-          </div>
+        <label className="sr" htmlFor="ask">Type here</label>
+        <div className="field">
+          <input id="ask" placeholder="Type here" />
+          <button>Go</button>
         </div>
       </main>
 
       <style jsx global>{`
         :root{
-          --bg: #f7f7fb;
-          --ink: #0a0a0a;
-          --muted: #8c8f99;
-          --glass: rgba(255,255,255,.75);
-          --ring: rgba(0,0,0,.08);
-          --glow1: #ffd1e1;
-          --glow2: #c9d7ff;
-          --accent1: #ff2e8f;
-          --accent2: #5856d6;
-          --accent3: #00b3ff;
+          --bg: #faf7f2;
+          --ink: #0b0b10;
+          --muted: #8a8d95;
+          --ring: rgba(13, 13, 18, .08);
+          --focus: rgba(20, 180, 255, .35);
+          --c1: #16f2b8;
+          --c2: #ff6aa0;
+          --c3: #8a7dff;
         }
 
         html, body, #__next { height: 100%; margin: 0; }
         body {
-          font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
-          color: var(--ink);
           background:
-            radial-gradient(40rem 20rem at 50% 0%, rgba(255, 217, 230, .45), transparent 55%),
-            linear-gradient(180deg, #ffffff 0%, var(--bg) 80%);
+            radial-gradient(60rem 60rem at 10% -10%, rgba(255,106,160,.12), transparent 60%),
+            radial-gradient(50rem 50rem at 90% 110%, rgba(22,242,184,.10), transparent 60%),
+            var(--bg);
+          color: var(--ink);
+          font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
         }
 
         .wrap {
           min-height: 100%;
           display: grid;
           place-items: center;
-          padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom);
+          padding: 24px;
         }
 
-        .halo {
-          position: fixed;
-          inset: 0;
-          pointer-events: none;
-          background:
-            radial-gradient(60rem 30rem at 50% -10%, rgba(255, 182, 193, .22), transparent 45%),
-            radial-gradient(40rem 24rem at 80% 10%, rgba(189, 216, 255, .18), transparent 55%);
-          filter: saturate(110%);
-        }
-
-        .card {
-          width: min(92vw, 720px);
-          background: var(--glass);
-          backdrop-filter: blur(14px);
-          -webkit-backdrop-filter: blur(14px);
-          border-radius: 28px;
-          border: 1px solid var(--ring);
-          box-shadow:
-            inset 0 1px 0 rgba(255,255,255,.8),
-            0 8px 20px rgba(0,0,0,.06),
-            0 30px 80px rgba(255, 105, 180, .10);
-          padding: clamp(20px, 4vw, 36px);
-          text-align: center;
-        }
-
-        .wordmark {
-          margin: 0 0 18px 0;
-          font-size: clamp(40px, 9vw, 110px);
-          line-height: .95;
-          letter-spacing: -0.02em;
-          font-weight: 800;
-          background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
-          -webkit-background-clip: text;
-          background-clip: text;
+        /* Wordmark: bold, unique tri tone stroke with safe line height to avoid clipping */
+        .mark {
+          margin: 0 0 28px 0;
+          font-size: clamp(48px, 9vw, 120px);
+          line-height: 1.08;
+          font-weight: 900;
+          letter-spacing: -0.015em;
+          position: relative;
+          display: inline-block;
           color: transparent;
-          text-shadow: 0 6px 30px rgba(255, 105, 180, .15);
+          background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3));
+          -webkit-background-clip: text;
+                  background-clip: text;
+          text-shadow:
+            0 0 0 rgba(0,0,0,0),
+           -1px 0 0 rgba(0,0,0,.05),
+            0 1px 0 rgba(0,0,0,.05);
+          padding-bottom: 6px;
         }
 
-        .inputWrap {
-          margin: 14px auto 2px auto;
+        /* Underline accent that animates on focus */
+        .mark::after{
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: -10px;
+          height: 6px;
+          border-radius: 999px;
+          background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3));
+          opacity: .22;
+        }
+
+        .field{
+          width: min(92vw, 640px);
           display: grid;
           grid-template-columns: 1fr auto;
           gap: 8px;
           align-items: center;
-          width: min(92vw, 560px);
-          background: rgba(255,255,255,.9);
+          padding: 8px;
           border: 1px solid var(--ring);
-          border-radius: 18px;
+          border-radius: 20px;
+          background: rgba(255,255,255,.9);
           box-shadow:
             inset 0 1px 0 rgba(255,255,255,.8),
-            0 2px 10px rgba(0,0,0,.04);
-          padding: 6px;
+            0 8px 24px rgba(0,0,0,.06);
         }
 
-        input {
+        input{
+          width: 100%;
           border: 0;
           outline: 0;
           background: transparent;
           padding: 14px 14px 14px 16px;
-          font-size: clamp(16px, 3.5vw, 18px);
+          font-size: clamp(16px, 3.4vw, 19px);
           color: var(--ink);
-          width: 100%;
         }
+        input::placeholder{ color: var(--muted); }
 
-        input::placeholder { color: var(--muted); }
-
-        button {
+        button{
           border: 0;
-          cursor: pointer;
-          padding: 12px 18px;
           border-radius: 14px;
+          padding: 12px 18px;
           font-weight: 700;
-          color: #fff;
-          background: linear-gradient(135deg, var(--accent1), var(--accent2) 60%, var(--accent3));
-          box-shadow: 0 8px 20px rgba(88,86,214,.25), inset 0 1px 0 rgba(255,255,255,.6);
+          color: #0b0b10;
+          background:
+            conic-gradient(from 220deg at 50% 50%, var(--c1), var(--c2), var(--c3), var(--c1));
+          box-shadow:
+            0 10px 24px rgba(138,125,255,.22),
+            inset 0 1px 0 rgba(255,255,255,.7);
+          cursor: pointer;
         }
 
-        .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+        /* Focus ring for keyboard and mobile accessibility */
+        .field:focus-within{
+          box-shadow:
+            0 0 0 4px var(--focus),
+            inset 0 1px 0 rgba(255,255,255,.8),
+            0 8px 24px rgba(0,0,0,.06);
+        }
+
+        .sr{ position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
       `}</style>
     </>
   );
