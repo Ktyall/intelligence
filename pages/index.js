@@ -1,78 +1,76 @@
+import Head from "next/head";
+
 export default function Home() {
   return (
-    <div style={{
-      minHeight: '100vh',
-      backgroundColor: '#0b0f1a',
-      color: '#e7ecff',
-      fontFamily: 'Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      textAlign: 'center',
-      padding: '40px 16px'
-    }}>
-      <header style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        width: '100%',
-        maxWidth: '900px',
-        fontSize: '14px',
-        opacity: 0.8
-      }}>
-        <div>Intelligence</div>
-        <div style={{ display: 'flex', gap: '20px' }}>
-          <a href="#">About</a>
-          <a href="#">Docs</a>
-          <a href="#">Sign in</a>
-        </div>
-      </header>
+    <>
+      <Head>
+        <title>Intelligence</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <meta name="theme-color" content="#fbfbfd" />
+      </Head>
 
-      <main style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-        <h1 style={{ fontSize: '48px', margin: '0 0 10px' }}>Work that feels simple</h1>
-        <p style={{ maxWidth: '500px', margin: '0 auto 40px', color: '#a0aec0' }}>
-          One place to create letters, run forms, and ship clean files. Private by default. Yours always.
-        </p>
+      <div style={styles.page}>
+        <h1 style={styles.wordmark}>Intelligence</h1>
 
-        <div style={{ position: 'relative', width: '100%', maxWidth: '600px', margin: '0 auto' }}>
+        <div style={styles.center}>
           <input
-            placeholder="Type what you need"
-            style={{
-              width: '100%',
-              padding: '16px 100px 16px 20px',
-              borderRadius: '12px',
-              border: 'none',
-              backgroundColor: '#12182a',
-              color: '#e7ecff',
-              fontSize: '16px',
-              outline: 'none'
-            }}
+            aria-label="Type here"
+            placeholder="Type here"
+            style={styles.input}
           />
-          <button style={{
-            position: 'absolute',
-            right: '6px',
-            top: '6px',
-            height: '44px',
-            padding: '0 18px',
-            backgroundColor: '#79ffe1',
-            color: '#0b0f1a',
-            border: 'none',
-            borderRadius: '10px',
-            fontWeight: 600,
-            cursor: 'pointer'
-          }}>
-            Go
-          </button>
         </div>
 
-        <div style={{ color: '#a0aec0', fontSize: '12px', marginTop: '10px' }}>
-          Try: parent letter in Spanish about MAP results
-        </div>
-      </main>
-
-      <footer style={{ fontSize: '12px', opacity: 0.7 }}>
-        wealthiest and mightiest
-      </footer>
-    </div>
+        <div style={styles.spacer} />
+      </div>
+    </>
   );
 }
+
+const styles = {
+  page: {
+    minHeight: "100vh",
+    margin: 0,
+    background:
+      "radial-gradient(1200px 600px at 50% 0%, rgba(255, 182, 193, .35), transparent 60%), linear-gradient(180deg, #fbfbfd 0%, #f6f7fb 100%)",
+    display: "grid",
+    gridTemplateRows: "auto 1fr auto",
+    alignItems: "center",
+    justifyItems: "center",
+    fontFamily:
+      "-apple-system, system-ui, BlinkMacSystemFont, Segoe UI, Roboto, Arial",
+    color: "#121212",
+    padding: "24px 16px"
+  },
+  wordmark: {
+    margin: "24px 0 8px 0",
+    fontSize: "clamp(28px, 6vw, 56px)",
+    letterSpacing: ".5px",
+    lineHeight: 1.05,
+    background:
+      "linear-gradient(90deg, #c06, #ffb6c1 40%, #b0b7c3 70%, #ccd2db 100%)",
+    WebkitBackgroundClip: "text",
+    backgroundClip: "text",
+    color: "transparent",
+    textAlign: "center",
+    fontWeight: 700
+  },
+  center: {
+    width: "100%",
+    display: "grid",
+    placeItems: "center"
+  },
+  input: {
+    width: "min(92vw, 560px)",
+    padding: "16px 20px",
+    fontSize: "clamp(16px, 3.5vw, 18px)",
+    borderRadius: 18,
+    border: "1px solid rgba(0,0,0,.08)",
+    outline: "none",
+    background: "rgba(255,255,255,.85)",
+    boxShadow:
+      "inset 0 1px 0 rgba(255,255,255,.8), 0 1px 2px rgba(0,0,0,.06), 0 8px 24px rgba(194, 112, 128, .12)",
+    backdropFilter: "blur(6px)",
+    WebkitBackdropFilter: "blur(6px)"
+  },
+  spacer: { height: 24 }
+};
