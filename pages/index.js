@@ -1,98 +1,115 @@
 export default function Home() {
   return (
-    <>
-      <main style={{ position: "relative", paddingTop: 20 }}>
-        <div className="blobs">
-          <div className="blob b1" />
-          <div className="blob b2" />
-          <div className="blob b3" />
-        </div>
-
-        <section className="wrap" style={{ marginTop: 28 }}>
-          {/* Hero */}
-          <div className="grid grid2" style={{ alignItems: "center" }}>
-            <div>
-              <h1 className="title">One place for school work that feels easy</h1>
-              <p className="lead">
-                Letters, forms, exports, and history for each campus with privacy by default. You see the whole network from the owner console.
-              </p>
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                <a href="#login"><button className="cta">Get started</button></a>
-                <a href="#how"><button className="ghost">See how it works</button></a>
-              </div>
-            </div>
-
-            {/* Clean hero card on dark background */}
-            <div className="card" style={{ minHeight: 280 }}>
-              <div style={{ fontWeight: 900, fontSize: 18, marginBottom: 8 }}>Quick run</div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 8 }}>
-                <input placeholder="Type what you need" style={input} />
-                <button className="cta">Go</button>
-              </div>
-              <div style={{ marginTop: 8, color: "#6b7280", fontSize: 13 }}>
-                Example. Parent letter in Spanish about MAP results
-              </div>
-            </div>
+    <main>
+      <section className="hero">
+        <div className="halo" />
+        <div className="inner">
+          <h1>Work that feels simple</h1>
+          <p>
+            One place to create letters, run forms, and export clean files.
+            Private by default. Yours always.
+          </p>
+          <div className="bar">
+            <input placeholder="Type what you need…" />
+            <button>Go</button>
           </div>
+        </div>
+      </section>
 
-          {/* Features */}
-          <section id="features" style={{ marginTop: 20 }} className="grid grid3">
-            {[
-              { t: "Generators", d: "Write letters and docs in your voice" },
-              { t: "Workflows", d: "Form in, generate, review, export, email" },
-              { t: "Datasets", d: "Connect Sheets and run rows at scale" },
-            ].map(x => (
-              <div key={x.t} className="card">
-                <div style={{ fontWeight: 900, fontSize: 18 }}>{x.t}</div>
-                <div style={{ marginTop: 6, color: "#555" }}>{x.d}</div>
-              </div>
-            ))}
-          </section>
+      <section id="features" className="features">
+        <div>
+          <h3>Generators</h3>
+          <p>Create letters in your tone and language.</p>
+        </div>
+        <div>
+          <h3>Workflows</h3>
+          <p>Collect, generate, review, export, done.</p>
+        </div>
+        <div>
+          <h3>Datasets</h3>
+          <p>Process full spreadsheets at once.</p>
+        </div>
+      </section>
 
-          {/* How */}
-          <section id="how" style={{ marginTop: 20 }} className="card">
-            <ol style={{ margin: 0, paddingLeft: 18, lineHeight: 1.9, color: "#333" }}>
-              <li>School signs in and opens a tool tile</li>
-              <li>Fill inputs or pick a preset then generate</li>
-              <li>Review and export to Drive</li>
-              <li>Owner sees activity and can switch into any campus to help</li>
-            </ol>
-          </section>
+      <style jsx>{`
+        .hero{
+          position: relative;
+          min-height: 80vh;
+          display: flex; align-items: center; justify-content: center;
+          text-align: center;
+          overflow: hidden;
+        }
 
-          {/* Pricing */}
-          <section id="pricing" style={{ marginTop: 20 }} className="grid grid3">
-            {[
-              { name: "Starter", price: "$99", note: "One school" },
-              { name: "Growth", price: "$499", note: "Up to ten schools" },
-              { name: "Network", price: "Contact", note: "Many schools" },
-            ].map(x => (
-              <div key={x.name} className="card">
-                <div style={{ fontWeight: 900 }}>{x.name}</div>
-                <div style={{ fontSize: 28, marginTop: 6 }}>{x.price}</div>
-                <div style={{ color: "#555" }}>{x.note}</div>
-              </div>
-            ))}
-          </section>
+        .halo{
+          position: absolute; inset: 0;
+          background:
+            radial-gradient(40rem 40rem at 50% 30%, rgba(255,209,102,.3), transparent 60%),
+            radial-gradient(30rem 20rem at 80% 70%, rgba(255,255,255,.06), transparent 70%);
+          animation: pulse 14s ease-in-out infinite alternate;
+          filter: blur(60px);
+        }
 
-          {/* Login stub */}
-          <section id="login" style={{ marginTop: 20 }} className="card">
-            <h3 style={{ margin: "0 0 8px 0" }}>Sign in</h3>
-            <div style={{ display: "grid", gap: 10, maxWidth: 420 }}>
-              <input placeholder="Email" style={input} />
-              <input placeholder="Password" type="password" style={input} />
-              <button className="cta">Continue</button>
-              <div style={{ color: "#666" }}>Real auth comes next phase</div>
-            </div>
-          </section>
-        </section>
-      </main>
-    </>
+        @keyframes pulse {
+          from { transform: scale(1); opacity: .8; }
+          to { transform: scale(1.2); opacity: 1; }
+        }
+
+        .inner{ position: relative; max-width: 700px; z-index: 1; padding: 0 24px; }
+        h1{
+          font-size: clamp(42px, 6vw, 84px);
+          line-height: 1.05;
+          margin-bottom: 12px;
+        }
+        p{
+          color: var(--muted);
+          font-size: 18px;
+          max-width: 540px;
+          margin: 0 auto 36px;
+        }
+
+        .bar{
+          display: flex; justify-content: center;
+          gap: 8px; flex-wrap: wrap;
+        }
+
+        input{
+          width: min(80vw, 420px);
+          padding: 14px 16px;
+          border-radius: 12px;
+          border: none;
+          outline: none;
+          font-size: 16px;
+        }
+
+        button{
+          padding: 14px 20px;
+          border: none;
+          border-radius: 12px;
+          background: var(--accent);
+          color: #0b0b10;
+          font-weight: 700;
+          cursor: pointer;
+        }
+
+        .features{
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+          gap: 24px;
+          max-width: 900px;
+          margin: 100px auto;
+          padding: 0 24px;
+        }
+        .features h3{
+          color: var(--accent);
+          font-size: 20px;
+          margin-bottom: 6px;
+        }
+        .features p{
+          color: var(--muted);
+          font-size: 15px;
+          margin: 0;
+        }
+      `}</style>
+    </main>
   );
 }
-
-const input = {
-  padding: "12px 14px",
-  borderRadius: 12,
-  border: "1px solid rgba(11,11,15,.12)",
-  fontSize: 16
-};
