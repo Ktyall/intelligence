@@ -6,21 +6,16 @@ export default function Home() {
       <Head>
         <title>Intelligence</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-        <meta name="theme-color" content="#fbfbfd" />
       </Head>
 
       <div style={styles.page}>
-        <h1 style={styles.wordmark}>Intelligence</h1>
-
         <div style={styles.center}>
+          <h1 style={styles.wordmark}>Intelligence</h1>
           <input
-            aria-label="Type here"
             placeholder="Type here"
             style={styles.input}
           />
         </div>
-
-        <div style={styles.spacer} />
       </div>
     </>
   );
@@ -31,46 +26,29 @@ const styles = {
     minHeight: "100vh",
     margin: 0,
     background:
-      "radial-gradient(1200px 600px at 50% 0%, rgba(255, 182, 193, .35), transparent 60%), linear-gradient(180deg, #fbfbfd 0%, #f6f7fb 100%)",
-    display: "grid",
-    gridTemplateRows: "auto 1fr auto",
+      "radial-gradient(800px 400px at 50% 0%, rgba(255, 192, 203, .25), transparent 60%), linear-gradient(180deg, #fbfbfd 0%, #f8f9fb 100%)",
+    display: "flex",
+    justifyContent: "center",
     alignItems: "center",
-    justifyItems: "center",
     fontFamily:
       "-apple-system, system-ui, BlinkMacSystemFont, Segoe UI, Roboto, Arial",
-    color: "#121212",
-    padding: "24px 16px"
+  },
+  center: {
+    textAlign: "center",
+    transform: "translateY(40px)", // pushes it slightly lower
   },
   wordmark: {
-    margin: "24px 0 8px 0",
-    fontSize: "clamp(28px, 6vw, 56px)",
-    letterSpacing: ".5px",
-    lineHeight: 1.05,
+    margin: 0,
+    fontSize: "clamp(56px, 10vw, 120px)",
+    fontWeight: 800,
+    letterSpacing: "-0.02em",
     background:
-      "linear-gradient(90deg, #c06, #ffb6c1 40%, #b0b7c3 70%, #ccd2db 100%)",
+      "linear-gradient(90deg, #ff005e, #e4a0f7, #9b5de5, #5e60ce, #48bfe3)",
     WebkitBackgroundClip: "text",
     backgroundClip: "text",
     color: "transparent",
-    textAlign: "center",
-    fontWeight: 700
-  },
-  center: {
-    width: "100%",
-    display: "grid",
-    placeItems: "center"
+    textShadow: "0 4px 20px rgba(255, 105, 180, .2)",
   },
   input: {
-    width: "min(92vw, 560px)",
-    padding: "16px 20px",
-    fontSize: "clamp(16px, 3.5vw, 18px)",
-    borderRadius: 18,
-    border: "1px solid rgba(0,0,0,.08)",
-    outline: "none",
-    background: "rgba(255,255,255,.85)",
-    boxShadow:
-      "inset 0 1px 0 rgba(255,255,255,.8), 0 1px 2px rgba(0,0,0,.06), 0 8px 24px rgba(194, 112, 128, .12)",
-    backdropFilter: "blur(6px)",
-    WebkitBackdropFilter: "blur(6px)"
-  },
-  spacer: { height: 24 }
-};
+    marginTop: 40,
+    width: "min(90vw, 520px)",
