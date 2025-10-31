@@ -19,6 +19,14 @@ export default function Hero() {
     return () => window.removeEventListener("mousemove", onMove);
   }, []);
 
+  const launch = (e) => {
+    e.preventDefault();
+    document.body.classList.add("transition-out");
+    setTimeout(() => {
+      window.location.href = "/demo";
+    }, 650);
+  };
+
   return (
     <section className="hero">
       {/* cinematic background */}
@@ -28,15 +36,15 @@ export default function Hero() {
 
       {/* reveal layer sits above bg and below text */}
       <div className="reveal" aria-hidden>
-        <Stamp style={{ top: "14%", left: "18%" }} kind="book" />
-        <Stamp style={{ top: "22%", left: "70%" }} kind="calc" />
-        <Stamp style={{ top: "36%", left: "42%" }} kind="map" />
-        <Stamp style={{ top: "58%", left: "22%" }} kind="diploma" />
-        <Stamp style={{ top: "62%", left: "66%" }} kind="clipboard" />
-        <Stamp style={{ top: "46%", left: "80%" }} kind="calendar" />
-        <Stamp style={{ top: "72%", left: "40%" }} kind="globe" />
-        <Stamp style={{ top: "30%", left: "6%" }} kind="beaker" />
-        <Stamp style={{ top: "12%", left: "86%" }} kind="star" />
+        <Stamp style={{ top: "14%", left: "18%" }} kind="book" label="Lesson plans" />
+        <Stamp style={{ top: "22%", left: "70%" }} kind="calc" label="Grades" />
+        <Stamp style={{ top: "36%", left: "42%" }} kind="map" label="Campus map" />
+        <Stamp style={{ top: "58%", left: "22%" }} kind="diploma" label="Transcripts" />
+        <Stamp style={{ top: "62%", left: "66%" }} kind="clipboard" label="Checklists" />
+        <Stamp style={{ top: "46%", left: "80%" }} kind="calendar" label="Calendar" />
+        <Stamp style={{ top: "72%", left: "40%" }} kind="globe" label="Languages" />
+        <Stamp style={{ top: "30%", left: "6%" }} kind="beaker" label="Labs" />
+        <Stamp style={{ top: "12%", left: "86%" }} kind="star" label="Merit" />
       </div>
 
       {/* interactive lens glow */}
@@ -49,7 +57,7 @@ export default function Hero() {
           Everything your school does. Orchestrated with calm precision.
         </p>
         <div className="ctaWrap">
-          <a href="#start" className="cta">Launch demo</a>
+          <a href="/demo" onClick={launch} className="cta">Launch demo</a>
         </div>
       </div>
 
@@ -92,20 +100,22 @@ export default function Hero() {
         .reveal {
           position: absolute;
           inset: 0;
-          pointer-events: none;
           z-index: 1;
+
+          /* allow hover so tiles can react */
+          pointer-events: auto;
 
           /* circular window controlled by CSS variables set in JS */
           -webkit-mask-image: radial-gradient(
-            220px 220px at var(--lx, 50%) var(--ly, 50%),
+            240px 240px at var(--lx, 50%) var(--ly, 50%),
             rgba(0,0,0,1) 0%,
-            rgba(0,0,0,1) 45%,
+            rgba(0,0,0,1) 44%,
             rgba(0,0,0,0) 60%
           );
           mask-image: radial-gradient(
-            220px 220px at var(--lx, 50%) var(--ly, 50%),
+            240px 240px at var(--lx, 50%) var(--ly, 50%),
             rgba(0,0,0,1) 0%,
-            rgba(0,0,0,1) 45%,
+            rgba(0,0,0,1) 44%,
             rgba(0,0,0,0) 60%
           );
         }
@@ -113,8 +123,8 @@ export default function Hero() {
         /* interactive lens glow that sits under the mask for light */
         .lens {
           position: absolute;
-          width: 750px;
-          height: 750px;
+          width: 780px;
+          height: 780px;
           border-radius: 50%;
           background:
             radial-gradient(circle at 50% 50%, rgba(255,255,255,.18), rgba(255,255,255,0) 52%),
@@ -138,7 +148,7 @@ export default function Hero() {
           -webkit-background-clip: text;
           background-clip: text;
           color: transparent;
-          text-shadow: 0 20px 60px rgba(88,208,255,.22);
+          text-shadow: 0 20px 60px rgba(88, 208, 255, .22);
         }
         .lead {
           margin: 0 auto 26px;
@@ -152,8 +162,18 @@ export default function Hero() {
           height: 48px; padding: 0 18px; border-radius: 12px;
           font-weight: 800; text-decoration: none; color: #0b0b10;
           background: linear-gradient(180deg, #8fe4ff, #58d0ff);
-          box-shadow: 0 18px 40px rgba(88,208,255,.35), inset 0 1px 0 rgba(255,255,255,.8);
+          box-shadow:
+            0 18px 40px rgba(88,208,255,.35), inset 0 1px 0 rgba(255,255,255,.8);
         }
+
+        /* fade to white on launch */
+        :global(body.transition-out)::after{
+          content: "";
+          position: fixed; inset: 0; z-index: 9999;
+          background: #ffffff;
+          animation: fadein .65s ease forwards;
+        }
+        @keyframes fadein { from { opacity: 0 } to { opacity: 1 } }
 
         @media (prefers-reduced-motion: reduce) {
           .fog, .rings { animation: none }
@@ -163,17 +183,18 @@ export default function Hero() {
   );
 }
 
-/* one Stamp is a softly lit tile with a high fidelity icon */
-function Stamp({ style, kind }) {
+/* one Stamp is a softly lit tile with a high fidelity icon and a label */
+function Stamp({ style, kind, label }) {
   return (
     <div className="stamp" style={style}>
       {icons[kind]}
+      <div className="tag">{label}</div>
       <style jsx>{`
         .stamp{
           position: absolute;
-          width: 88px; height: 88px;
+          width: 96px; height: 96px;
           display: grid; place-items: center;
-          border-radius: 20px;
+          border-radius: 22px;
           background:
             radial-gradient(120% 120% at 30% 20%, rgba(255,255,255,.92), rgba(255,255,255,.62) 40%, rgba(255,255,255,.38) 70%),
             linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.12));
@@ -182,12 +203,34 @@ function Stamp({ style, kind }) {
             inset 0 1px 0 rgba(255,255,255,.9),
             inset 0 -1px 0 rgba(0,0,0,.08),
             0 20px 40px rgba(0,0,0,.35);
-          animation: bob 5.8s ease-in-out infinite;
+          animation: bob 6s ease-in-out infinite;
+          transition: transform .18s ease, box-shadow .18s ease;
+        }
+        .stamp:hover{
+          transform: translateY(-4px) scale(1.06);
+          box-shadow:
+            inset 0 1px 0 rgba(255,255,255,.9),
+            inset 0 -1px 0 rgba(0,0,0,.08),
+            0 26px 60px rgba(0,0,0,.45);
         }
         @keyframes bob { 0%{ transform: translateY(0) } 50%{ transform: translateY(-6px) } 100%{ transform: translateY(0) } }
 
+        .tag{
+          position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+          margin-top: 8px;
+          padding: 6px 10px;
+          border-radius: 999px;
+          background: rgba(255,255,255,.9);
+          color: #0b0b10;
+          font-weight: 800; font-size: 12px;
+          white-space: nowrap;
+          box-shadow: 0 8px 20px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.9);
+          opacity: .95;
+        }
+
         @media (max-width: 600px){
-          .stamp{ width: 72px; height: 72px }
+          .stamp{ width: 80px; height: 80px }
+          .tag{ font-size: 11px }
         }
       `}</style>
     </div>
@@ -197,7 +240,7 @@ function Stamp({ style, kind }) {
 /* icon set */
 const icons = {
   book: (
-    <svg viewBox="0 0 48 48" width="40" height="40" aria-label="Lessons">
+    <svg viewBox="0 0 48 48" width="44" height="44" aria-label="Lessons">
       <defs>
         <linearGradient id="b1" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#c1d9ff"/><stop offset="1" stopColor="#89b7ff"/>
@@ -215,7 +258,7 @@ const icons = {
     </svg>
   ),
   calc: (
-    <svg viewBox="0 0 48 48" width="40" height="40" aria-label="Calculator">
+    <svg viewBox="0 0 48 48" width="44" height="44" aria-label="Calculator">
       <defs>
         <linearGradient id="c1" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#baf9e1"/><stop offset="1" stopColor="#7fe7c4"/>
@@ -228,7 +271,7 @@ const icons = {
     </svg>
   ),
   map: (
-    <svg viewBox="0 0 48 48" width="40" height="40" aria-label="Map">
+    <svg viewBox="0 0 48 48" width="44" height="44" aria-label="Map">
       <defs>
         <linearGradient id="m1" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#8fe4ff"/><stop offset="1" stopColor="#58d0ff"/>
@@ -240,7 +283,7 @@ const icons = {
     </svg>
   ),
   diploma: (
-    <svg viewBox="0 0 48 48" width="40" height="40" aria-label="Diploma">
+    <svg viewBox="0 0 48 48" width="44" height="44" aria-label="Diploma">
       <defs>
         <linearGradient id="d1" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#ffe6b3"/><stop offset="1" stopColor="#ffd166"/>
@@ -252,7 +295,7 @@ const icons = {
     </svg>
   ),
   clipboard: (
-    <svg viewBox="0 0 48 48" width="40" height="40" aria-label="Clipboard">
+    <svg viewBox="0 0 48 48" width="44" height="44" aria-label="Clipboard">
       <defs>
         <linearGradient id="cl1" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#e6eaff"/><stop offset="1" stopColor="#c9d3ff"/>
@@ -264,7 +307,7 @@ const icons = {
     </svg>
   ),
   calendar: (
-    <svg viewBox="0 0 48 48" width="40" height="40" aria-label="Calendar">
+    <svg viewBox="0 0 48 48" width="44" height="44" aria-label="Calendar">
       <defs>
         <linearGradient id="ca1" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#ffdcdc"/><stop offset="1" stopColor="#ffb2b2"/>
@@ -278,7 +321,7 @@ const icons = {
     </svg>
   ),
   globe: (
-    <svg viewBox="0 0 48 48" width="40" height="40" aria-label="Globe">
+    <svg viewBox="0 0 48 48" width="44" height="44" aria-label="Globe">
       <defs>
         <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#8fe4ff"/><stop offset="1" stopColor="#58d0ff"/>
@@ -290,7 +333,7 @@ const icons = {
     </svg>
   ),
   beaker: (
-    <svg viewBox="0 0 48 48" width="40" height="40" aria-label="Science">
+    <svg viewBox="0 0 48 48" width="44" height="44" aria-label="Science">
       <defs>
         <linearGradient id="bk1" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#baf9e1"/><stop offset="1" stopColor="#7fe7c4"/>
@@ -302,7 +345,7 @@ const icons = {
     </svg>
   ),
   star: (
-    <svg viewBox="0 0 48 48" width="40" height="40" aria-label="Quality">
+    <svg viewBox="0 0 48 48" width="44" height="44" aria-label="Quality">
       <defs>
         <linearGradient id="st1" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#fff3b0"/><stop offset="1" stopColor="#ffd166"/>
